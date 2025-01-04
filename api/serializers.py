@@ -1,7 +1,17 @@
 from .models import Quiz, Option, Question, Candidate, Response
 from rest_framework import serializers
 
-class 
+class CandidateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Candidate
+        fields = "__all__"
+        read_only = ["id"]
+        
+    def create(self, validated_data):
+        return Candidate.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
 
 class QuizSerializer(serializers.ModelSerializer):
     class Meta:

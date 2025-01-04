@@ -1,8 +1,8 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Quiz, Option, Question
-from .serializers import QuizSerializer, OptionSerializer, QuestionSerializer
+from .models import Quiz, Option, Question, Candidate
+from .serializers import QuizSerializer, OptionSerializer, QuestionSerializer, CandidateSerializer
 
 
 # Quiz Views
@@ -45,3 +45,9 @@ class QuestionListCreateView(generics.ListCreateAPIView):
 class QuestionRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+
+
+# candidate
+class CandidateListCreateView(generics.ListCreateAPIView):
+    queryset = Candidate.objects.all()
+    serializer_class = CandidateSerializer
