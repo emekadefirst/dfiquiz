@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Available Quiz - Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
 </head>
 
-<body class="bg-white h-screen flex overflow-hidden">
-    <!-- Sidebar -->
+<body class="bg-gray-50 h-screen flex overflow-hidden">
+    <!-- Sidebar (keeping the same) -->
     <aside class="bg-navy-900 text-white w-64 h-screen overflow-y-auto flex-shrink-0"
         style="background-color: #172554;">
         <div class="px-4 py-6">
@@ -30,12 +30,12 @@
                         <i class="fas fa-chevron-down text-sm transition-transform duration-200"></i>
                     </button>
                     <div id="candidateDropdown" class="hidden pl-4 mt-2 space-y-2">
-                        <a href="./create-candidate.html"
+                        <a href="#"
                             class="flex items-center px-4 py-2 hover:bg-blue-950/50 rounded-lg transition-colors duration-200">
                             <i class="fas fa-plus-circle mr-3"></i>
                             Create Candidate
                         </a>
-                        <a href="./candidates.html"
+                        <a href="#"
                             class="flex items-center px-4 py-2 hover:bg-blue-950/50 rounded-lg transition-colors duration-200">
                             <i class="fas fa-list mr-3"></i>
                             View All Candidates
@@ -54,20 +54,15 @@
                         <i class="fas fa-chevron-down text-sm transition-transform duration-200"></i>
                     </button>
                     <div id="quizDropdown" class="hidden pl-4 mt-2 space-y-2">
-                        <a href="create-quiz.html"
+                        <a href="#"
                             class="flex items-center px-4 py-2 hover:bg-blue-950/50 rounded-lg transition-colors duration-200">
                             <i class="fas fa-plus-circle mr-3"></i>
                             Create Quiz
                         </a>
-                        <a href=""
+                        <a href="#"
                             class="flex items-center px-4 py-2 hover:bg-blue-950/50 rounded-lg transition-colors duration-200">
                             <i class="fas fa-list-alt mr-3"></i>
                             View All Questions
-                        </a>
-                        <a href="./quizes.html"
-                            class="flex items-center px-4 py-2 hover:bg-blue-950/50 rounded-lg transition-colors duration-200">
-                            <i class="fas fa-list-alt mr-3"></i>
-                            View All Quiz
                         </a>
                         <a href="#"
                             class="flex items-center px-4 py-2 hover:bg-blue-950/50 rounded-lg transition-colors duration-200">
@@ -105,58 +100,45 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-        <div class="p-8">
-            <div class="max-w-7xl mx-auto">
-                <!-- Header Section -->
-                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome to the Dashboard</h1>
-                    <p class="text-gray-600">Use the sidebar to navigate between different sections.</p>
+    <main class="flex-1 overflow-y-auto bg-gray-50 p-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">Quiz</h1>
+                <p class="mt-2 text-gray-600">View and manage all registered quiz</p>
+            </div>
+
+            <!-- Table Section -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-semibold text-gray-800">All Quiz</h2>
+                        <a href="./create-quiz.html"
+                            class="bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors duration-200">
+                            <i class="fas fa-plus mr-2"></i>Add New
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Statistics Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-users text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Total Candidates</h3>
-                                <p class="text-2xl font-bold text-blue-950">1,234</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-question-circle text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Active Quizzes</h3>
-                                <p class="text-2xl font-bold text-blue-950">56</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-clock text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Active Sessions</h3>
-                                <p class="text-2xl font-bold text-blue-950">23</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full" id="candidatesTable">
+                        <thead class="bg-gray-50 border-b border-gray-200">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">ID</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="candidatesList">
+                            <!-- Data will be loaded here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
+        // Dropdown toggle function
         function toggleDropdown(id) {
             const dropdown = document.getElementById(id);
             const button = dropdown.previousElementSibling;
@@ -170,6 +152,42 @@
                 icon.style.transform = 'rotate(180deg)';
             }
         }
+
+        // Format date function
+        function formatDate(dateString) {
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Load candidates
+        async function loadCandidates() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/quizzes/');
+                const quizes = await response.json();
+
+                const tbody = document.getElementById('candidatesList');
+                tbody.innerHTML = quizes.map(quiz => `
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-900">${quiz.id}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">
+                            <div class="font-medium">${quiz.name}</div>
+                        </td>
+
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading candidates:', error);
+            }
+        }
+
+        // Load candidates when page loads
+        document.addEventListener('DOMContentLoaded', loadCandidates);
     </script>
 </body>
 

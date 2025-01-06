@@ -107,51 +107,38 @@
     <!-- Main Content -->
     <main class="flex-1 overflow-y-auto">
         <div class="p-8">
-            <div class="max-w-7xl mx-auto">
-                <!-- Header Section -->
-                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome to the Dashboard</h1>
-                    <p class="text-gray-600">Use the sidebar to navigate between different sections.</p>
+            <div class="bg-white rounded-xl shadow-lg p-6 mt-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Upload New Question</h2>
+
+                <!-- Form for uploading a question -->
+                <form id="questionForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Question Text</label>
+                        <input type="text" id="questionText" required class="mt-1 p-2 w-full border rounded">
+                    </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Quiz Name</label>
+                    <select id="quizName" required class="mt-1 p-2 w-full border rounded">
+                        <option value="" disabled selected>Select a quiz</option>
+                    </select>
                 </div>
 
-                <!-- Statistics Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-users text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Total Candidates</h3>
-                                <p class="text-2xl font-bold text-blue-950">1,234</p>
-                            </div>
-                        </div>
+
+                    <!-- Options -->
+                    <h3 class="text-lg font-bold text-gray-700 mt-6">Options</h3>
+
+                    <div id="optionsList" class="space-y-4">
+                        <!-- Option inputs will be generated dynamically -->
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-question-circle text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Active Quizzes</h3>
-                                <p class="text-2xl font-bold text-blue-950">56</p>
-                            </div>
-                        </div>
-                    </div>
+                    <button type="button" id="addOption" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded">Add
+                        Option</button>
 
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-clock text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Active Sessions</h3>
-                                <p class="text-2xl font-bold text-blue-950">23</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Submit Button -->
+                    <button type="submit" class="mt-6 px-4 py-2 bg-green-600 text-white rounded">Upload
+                        Question</button>
+                </form>
             </div>
         </div>
     </main>
@@ -159,18 +146,96 @@
     <script>
         function toggleDropdown(id) {
             const dropdown = document.getElementById(id);
-            const button = dropdown.previousElementSibling;
-            const icon = button.querySelector('.fa-chevron-down');
-
+            const icon = dropdown.previousElementSibling.querySelector('.fa-chevron-down');
             dropdown.classList.toggle('hidden');
-
-            if (dropdown.classList.contains('hidden')) {
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                icon.style.transform = 'rotate(180deg)';
-            }
+            icon.style.transform = dropdown.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
         }
     </script>
+
+    <script>
+        let optionCount = 0;
+        const optionsList = document.getElementById('optionsList');
+
+        function addOptionField() {
+            optionCount++;
+            const optionHTML = `
+                <div class="option-item">
+                    <label class="block text-sm font-medium text-gray-700">Option ${optionCount}</label>
+                    <input type="text" name="optionText" required class="mt-1 p-2 w-full border rounded" placeholder="Enter option text">
+                    <label class="inline-flex items-center mt-2">
+                        <input type="checkbox" name="isCorrect" class="form-checkbox">
+                        <span class="ml-2">Mark as Correct Answer</span>
+                    </label>
+                </div>
+            `;
+            optionsList.insertAdjacentHTML('beforeend', optionHTML);
+        }
+
+        // Add initial 2 option fields
+        addOptionField();
+
+        document.getElementById('addOption').addEventListener('click', addOptionField);
+    </script>
+<script>
+    // Fetch quizzes from the API
+    fetch('http://127.0.0.1:8000/api/quizzes/')
+        .then(response => response.json())
+        .then(data => {
+            const quizSelect = document.getElementById('quizName');
+            // Loop through the quizzes and create an option for each one
+            data.forEach(quiz => {
+                const option = document.createElement('option');
+                option.value = quiz.id;
+                option.textContent = quiz.name;
+                quizSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching quizzes:', error);
+        });
+</script>
+<script>
+    document.getElementById('questionForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const questionText = document.getElementById('questionText').value;
+            const quizId = document.getElementById('quizName').value;
+            const options = [];
+
+            // Collect options and correct answer flags
+            const optionItems = document.querySelectorAll('.option-item');
+            optionItems.forEach(item => {
+                const optionText = item.querySelector('input[name="optionText"]').value;
+                const isCorrect = item.querySelector('input[name="isCorrect"]').checked;
+                options.push({ text: optionText, is_correct: isCorrect });
+            });
+
+            const questionData = {
+                text: questionText,
+                quiz: quizId,
+                options: options,
+            };
+
+            // Send POST request to the API
+            fetch('http://127.0.0.1:8000/api/api/questions/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(questionData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Question uploaded successfully');
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error uploading question:', error);
+                    alert('Error uploading question');
+                });
+        });
+
+</script>
 </body>
 
 </html>

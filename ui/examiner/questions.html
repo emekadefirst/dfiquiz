@@ -4,19 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Quiz Questions - Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
 </head>
 
-<body class="bg-white h-screen flex overflow-hidden">
-    <!-- Sidebar -->
-    <aside class="bg-navy-900 text-white w-64 h-screen overflow-y-auto flex-shrink-0"
-        style="background-color: #172554;">
+<body class="bg-gray-50 h-screen flex overflow-hidden">
+    <aside class="bg-navy-900 text-white w-64 h-screen overflow-y-auto flex-shrink-0" style="background-color: #172554;">
         <div class="px-4 py-6">
             <h2 class="text-2xl font-bold text-center mb-8">Dashboard</h2>
-
+    
             <!-- Sidebar Links -->
             <nav class="space-y-4">
                 <!-- Candidate Dropdown -->
@@ -42,7 +40,7 @@
                         </a>
                     </div>
                 </div>
-
+    
                 <!-- Quiz Dropdown -->
                 <div class="relative">
                     <button onclick="toggleDropdown('quizDropdown')"
@@ -76,7 +74,7 @@
                         </a>
                     </div>
                 </div>
-
+    
                 <!-- Session Dropdown -->
                 <div class="relative">
                     <button onclick="toggleDropdown('sessionDropdown')"
@@ -105,57 +103,68 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-        <div class="p-8">
-            <div class="max-w-7xl mx-auto">
-                <!-- Header Section -->
-                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome to the Dashboard</h1>
-                    <p class="text-gray-600">Use the sidebar to navigate between different sections.</p>
+    <main class="flex-1 overflow-y-auto bg-gray-50 p-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">Quiz Questions</h1>
+                <p class="mt-2 text-gray-600">View and manage all quiz questions</p>
+            </div>
+
+            <!-- Questions Section -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mt-8">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-semibold text-gray-800">Quiz Questions</h2>
+                    </div>
                 </div>
 
-                <!-- Statistics Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-users text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Total Candidates</h3>
-                                <p class="text-2xl font-bold text-blue-950">1,234</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-question-circle text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Active Quizzes</h3>
-                                <p class="text-2xl font-bold text-blue-950">56</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
-                        <div class="flex items-center">
-                            <div class="bg-blue-50 p-3 rounded-lg">
-                                <i class="fas fa-clock text-blue-950 text-xl"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-semibold text-gray-800">Active Sessions</h3>
-                                <p class="text-2xl font-bold text-blue-950">23</p>
-                            </div>
-                        </div>
+                <div class="overflow-x-auto p-6">
+                    <div id="questionsList" class="space-y-6">
+                        <!-- Questions will be loaded here -->
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
+<script>
+    // Format options as a numbered list
+    function formatOptions(options) {
+        return options.map((option, index) => `
+            <li class="mb-2">
+                <span class="font-bold">${index + 1}.</span> ${option.text}
+                ${option.is_correct ? '<span class="text-green-600 font-bold">(Correct)</span>' : ''}
+            </li>
+        `).join('');
+    }
+
+    // Load questions from API
+    async function loadQuestions() {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/questions/');
+            const questions = await response.json();
+
+            const questionsList = document.getElementById('questionsList');
+            questionsList.innerHTML = questions.map((question, index) => `
+                <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900">
+                        ${index + 1}. ${question.text}
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">Quiz: ${question.quiz}</p>
+                    <ul class="list-disc pl-6 text-gray-800">
+                        ${formatOptions(question.options)}
+                    </ul>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error loading questions:', error);
+        }
+    }
+
+    // Load questions when page loads
+    document.addEventListener('DOMContentLoaded', loadQuestions);
+</script>
     <script>
         function toggleDropdown(id) {
             const dropdown = document.getElementById(id);

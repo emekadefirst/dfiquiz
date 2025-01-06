@@ -5,7 +5,10 @@ from .views import (
     OptionListCreateView,
     OptionRetrieveUpdateDestroyView,
     QuestionListCreateView,
-    QuestionRetrieveUpdateDestroyView
+    QuestionRetrieveUpdateDestroyView,
+    CandidateRetrieveUpdateDestroyView,
+    CandidateCreateView,
+    QuizListCreateView,
 )
 
 urlpatterns = [
@@ -15,6 +18,9 @@ urlpatterns = [
     path('options/', OptionListCreateView.as_view(), name='option-list-create'),
     path('options/<int:pk>/', OptionRetrieveUpdateDestroyView.as_view(), name='option-detail'),
     
+    path('candidate/', CandidateCreateView.as_view(), name='candidate-list-create'),
+    path('candidate/<int:pk>/', CandidateRetrieveUpdateDestroyView.as_view(), name='option-detail'),
+
     path('questions/', QuestionListCreateView.as_view(), name='question-list-create'),
     path('questions/<int:pk>/', QuestionRetrieveUpdateDestroyView.as_view(), name='question-detail'),
 ]

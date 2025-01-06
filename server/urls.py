@@ -7,6 +7,11 @@ from rest_framework import permissions
 from django.conf.urls.static import static
 
 from django.conf import settings
+from rest_framework.routers import DefaultRouter
+from api.views import QuestionViewSet
+
+router = DefaultRouter()
+router.register(r"questions", QuestionViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(

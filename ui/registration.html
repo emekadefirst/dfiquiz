@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Candidate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white text-blue-900 min-h-screen flex items-center justify-center">
+    <!-- Main Container -->
+    <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-md border border-blue-900">
+        <h1 class="text-3xl font-bold mb-4 text-center">Register Candidate</h1>
+
+        <form id="registerForm" class="space-y-6">
+            <!-- First Name -->
+            <div>
+                <label for="firstName" class="block text-sm font-medium">First Name</label>
+                <input type="text" id="firstName" name="firstName" required
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md text-blue-900 focus:ring-blue-900 focus:border-blue-900" />
+            </div>
+
+            <!-- Last Name -->
+            <div>
+                <label for="lastName" class="block text-sm font-medium">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md text-blue-900 focus:ring-blue-900 focus:border-blue-900" />
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium">Email</label>
+                <input type="email" id="email" name="email" required
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md text-blue-900 focus:ring-blue-900 focus:border-blue-900" />
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+                <label for="phone" class="block text-sm font-medium">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md text-blue-900 focus:ring-blue-900 focus:border-blue-900" />
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="bg-blue-900 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-800 w-full">Submit</button>
+        </form>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden text-center text-green-600 font-bold mt-4">
+            Candidate registered successfully!
+        </div>
+    </div>
+
+</body>
+
+</html>
