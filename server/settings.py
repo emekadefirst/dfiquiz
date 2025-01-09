@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
 ]
-CORS_ALLOWED_ORIGINS = ["ol-etest.vercel.app"]
+CORS_ALLOWED_ORIGINS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = (
     "DELETE",
