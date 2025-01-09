@@ -12,8 +12,6 @@ SECRET_KEY = "django-insecure-_afy&yfg85b&m6r06zahwktfpv*zb54x=k_68e%@7zj452lc0r
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
-    "unfold.contrib.import_export",
-    "import_export",
     "unfold",
     "django.contrib.admin",
     "django.contrib.auth",
