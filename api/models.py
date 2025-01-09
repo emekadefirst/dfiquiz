@@ -1,5 +1,7 @@
 from django.db import models
-
+import random
+import string
+from django.utils.timezone import now
 
 class Candidate(models.Model):
     id = models.AutoField(primary_key=True)
@@ -64,14 +66,38 @@ class Response(models.Model):
     def __str__(self):
         return f"{self.candidate} - {self.question} - {self.selected_option} - Correct: {self.count}"
 
-class Result(models.Model):
+
+class Session(models.Model):
     id = models.AutoField(primary_key=True)
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-    passed = models.PositiveIntegerField()
-    failed = models.PositiveIntegerField()
-    overall =  models.PositiveIntegerField(default=0)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    candidates = models.ManyToManyField(Candidate)
+    code = models.CharField(max_length=15, null=True, unique=True, blank=True)
+    number_of_question = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Session {self.id} - {self.quiz if self.quiz else 'No Quiz'}"
 
     def save(self, *args, **kwargs):
-        self.overall = self.passed + self.failed
+        if not self.code:
+            self.code = self._generate_unique_code()
         super().save(*args, **kwargs)
+
+    def _generate_unique_code(self):
+        """Generate a unique 10-character alphanumeric code."""
+        while True:
+            code = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
+            if not Session.objects.filter(code=code).exists():
+                return code
+
+
+class Result(models.Model):
+    id = models.AutoField(primary_key=True)
+    session_code = models.ForeignKey(Session, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    score = models.PositiveIntegerField()
+
+
