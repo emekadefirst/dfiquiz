@@ -1,6 +1,12 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 from .models import Candidate, Quiz, Question, Option, Response, Result, Session
+from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.import_export.forms import (
+    ExportForm,
+    ImportForm,
+    SelectableFieldsExportForm,
+)
 
 
 class OptionInline(admin.TabularInline):
@@ -13,6 +19,8 @@ class OptionInline(admin.TabularInline):
 class QuizAdmin(ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
+    import_form_class = ImportForm
+    export_form_class = ExportForm
 
 
 # Admin for Question
@@ -21,6 +29,8 @@ class QuestionAdmin(ModelAdmin):
     list_display = ("text", "quiz")
     search_fields = ("text", "quiz__name")
     inlines = [OptionInline]
+    import_form_class = ImportForm
+    export_form_class = ExportForm
 
 
 # Admin for Option
@@ -28,13 +38,16 @@ class QuestionAdmin(ModelAdmin):
 class OptionAdmin(ModelAdmin):
     list_display = ("text", "is_correct", "question")
     search_fields = ("text", "question__text")
-
+    import_form_class = ImportForm
+    export_form_class = ExportForm
 
 # Admin for Candidate
 @admin.register(Candidate)
 class CandidateAdmin(ModelAdmin):
     list_display = ("first_name", "last_name", "email", "phone_number", "created_at")
     search_fields = ("first_name", "last_name", "email", "phone_number")
+    import_form_class = ImportForm
+    export_form_class = ExportForm
 
 
 # Admin for Response
@@ -50,6 +63,8 @@ class ResultAdmin(ModelAdmin):
     list_display = ("id", "candidate_name", "session_code", "quiz_name", "score")
     search_fields = ("candidate__first_name", "candidate__last_name", "quiz__name")
     list_filter = ("quiz",)
+    import_form_class = ImportForm
+    export_form_class = ExportForm
 
     def candidate_name(self, obj):
         return f"{obj.candidate.first_name} {obj.candidate.last_name}"

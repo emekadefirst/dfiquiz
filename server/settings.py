@@ -9,9 +9,11 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-_afy&yfg85b&m6r06zahwktfpv*zb54x=k_68e%@7zj452lc0r"
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
+    # "unfold.contrib.import_export",
+    "import_export",
     "unfold",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -25,7 +27,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
 ]
-CORS_ALLOWED_ORIGINS = ["*"]
+# CORS_ALLOWED_ORIGINS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = (
     "DELETE",
@@ -157,3 +159,6 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
+
+# admin@oletest.com
+# admin@oletest
