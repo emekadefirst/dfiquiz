@@ -16,13 +16,11 @@ from .serializers import (
 
 # session
 class SesionCreateView(generics.ListCreateAPIView):
-    # permission_classes = [IsAuthenticated]
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
 
 
 class SessionRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated]
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
 
@@ -45,6 +43,10 @@ class QuizListCreateView(generics.ListCreateAPIView):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
+class QuizRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    # permission_classes = [IsAuthenticated]
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
 
 class QuestionCreateView(generics.CreateAPIView):
     # permission_classes = [IsAuthenticated]
@@ -52,10 +54,7 @@ class QuestionCreateView(generics.CreateAPIView):
     serializer_class = QuestionSerializer
 
 
-class QuizRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated]
-    queryset = Quiz.objects.all()
-    serializer_class = QuizSerializer
+
 
 
 # Option Views

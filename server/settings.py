@@ -9,7 +9,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-_afy&yfg85b&m6r06zahwktfpv*zb54x=k_68e%@7zj452lc0r"
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     # "unfold.contrib.import_export",
